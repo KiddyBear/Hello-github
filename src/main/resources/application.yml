@@ -1,0 +1,36 @@
+server:
+#  端口号必须不同
+  port: 8002
+
+spring:
+  application:
+    name: cloud-payment-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/db2022?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: xyx123456
+    type: com.alibaba.druid.pool.DruidDataSource
+
+
+#配置mybatis
+mybatis:
+  #设置别名
+  mapperLocations: classpath:mapper/*.xml
+#  帮助寻找entities实现类
+  type-aliases-package: com.bear.springcloud.entities
+  configuration:
+    map-underscore-to-camel-case: true #开启这个的作用是可以让数据库中的p_Addr与pojo中的pAddr对应
+eureka:
+  instance:
+    instance-id: payment8002
+    prefer-ip-address: true
+  client:
+#    是否注册进eureka
+    register-with-eureka: true
+#     是否从eureka服务中心抓取「注册信息」，集群必须为true，保证可以进行负载均衡
+    fetch-registry: true
+#    做服务端集群的时候，服务注册中心的被监控地址也需要改动
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka
+#      defaultZone: http://localhost:7001/eureka
